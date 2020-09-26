@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lhd.miaosha.mapper.OrderInfoMapper">
+    <insert id="insert" parameterType="com.lhd.vo.OrderInfo" useGeneratedKeys="true" keyProperty="orderId">
+ insert into order_info ( userid, goods_id, delivery_addr, goods_name, goods_count, goods_price,
+ order_channel, status, create_time, pay_time) values (#{userid,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER},
+ #{deliveryAddr,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{goodsCount,jdbcType=INTEGER},
+  #{goodsPrice,jdbcType=INTEGER}, #{orderChannel,jdbcType=INTEGER}, #{status,jdbcType=INTEGER},
+   #{createTime,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP}) </insert>
+</mapper>

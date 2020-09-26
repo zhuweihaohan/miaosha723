@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lhd.miaosha.mapper.MiaoshaOrderMapper">
+    <insert id="insert" parameterType="com.lhd.vo.MiaoshaOrder" useGeneratedKeys="true" keyProperty="miaoshaOrderId">
+ insert into miaosha_order ( userid, miaosha_goods_id, order_id) values ( #{userid,jdbcType=INTEGER}, #{miaoshaGoodsId,jdbcType=INTEGER},
+  #{orderId,jdbcType=INTEGER}) </insert>
+</mapper>

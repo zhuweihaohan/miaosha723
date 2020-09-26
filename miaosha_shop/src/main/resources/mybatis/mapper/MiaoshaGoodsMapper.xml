@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lhd.miaosha.mapper.MiaoshaGoodsMapper">
+  <!--MiaoshaGoods 继承了Goods类 -->
+  <select id="getAll" resultMap="BaseResultMap2">
+ SELECT g.*,miaosha_goods_id,miaosha_price,stock_count,start_date,end_date FROM miaosha_goods m inner join goods g on m.goods_id=g.goods_id </select>
+  <select id="getGoodsById" parameterType="int" resultMap="BaseResultMap2">
+ SELECT g.*,miaosha_goods_id,miaosha_price,stock_count,start_date,end_date FROM miaosha_goods m inner join goods g on m.goods_id=g.goods_id where m.miaosha_goods_id=#{miaoshaGoodsId} </select>
+  <!--表连接的结果映射；MiaoshaGoods,Goods-->
+    <update id="updateGoodsCount" parameterType="int">
+ update miaosha_goods set stock_count=stock_count-1 where miaosha_goods_id=#{miaoshaGoodsId} and stock_count>0;
+ </update>
+    <!--stock_count条件:解决库存数不会为负数-->
+
+
+  <resultMap id="BaseResultMap2" type="com.lhd.vo.MiaoshaGoods">
+    <id column="miaosha_goods_id" jdbcType="INTEGER" property="miaoshaGoodsId" />
+    <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="miaosha_price" jdbcType="INTEGER" property="miaoshaPrice" />
+    <result column="stock_count" jdbcType="INTEGER" property="stockCount" />
+    <result column="start_date" jdbcType="TIMESTAMP" property="startDate" />
+    <result column="end_date" jdbcType="TIMESTAMP" property="endDate" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="goods_title" jdbcType="VARCHAR" property="goodsTitle" />
+    <result column="goods_img" jdbcType="VARCHAR" property="goodsImg" />
+    <result column="goods_price" jdbcType="INTEGER" property="goodsPrice" />
+    <result column="goods_stock" jdbcType="INTEGER" property="goodsStock" /> </resultMap>
+</mapper>
