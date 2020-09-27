@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserService {
     @Autowired
-    UserMapper userMapper;
+   UserMapper userMapper;
     @Autowired
     RedisService redisService;
 
@@ -43,7 +43,7 @@ public class UserService {
 
     }
 
-    @Transactional
+   /* @Transactional
     public User updatePassword(String token, String password) {
 //1.查找用户；
         User user = getUserForToken(token);
@@ -74,5 +74,5 @@ public class UserService {
         }
 
         return user;
-    }
+    }*/
 }

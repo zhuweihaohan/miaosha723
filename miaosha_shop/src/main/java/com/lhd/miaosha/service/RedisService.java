@@ -20,6 +20,10 @@ public void set(String prefix,String key,Object value,int timeout){
     redisTemplate.opsForValue().set(prefix+":"+key,value,timeout, TimeUnit.SECONDS);
 
 }
+    public void set(String prefix,String key,Object value){
+        redisTemplate.opsForValue().set(prefix+":"+key,value);
+
+    }
 
     /**
      * 获取数据
@@ -43,7 +47,22 @@ public void set(String prefix,String key,Object value,int timeout){
     public void setString(String prefix,String key,String value,int timeout){
         stringRedisTemplate.opsForValue().set(prefix+":"+key,value,timeout,TimeUnit.SECONDS);
 }
+
+    /**
+     * 对某个key的值做减1操作
+     * @param prefix
+     * @param key
+     * @return
+     */
+    public long decrement(String prefix,String key){
+        return redisTemplate.opsForValue().decrement(prefix+":"+key);
+}
 public String getString(String prefix,String key){
     return stringRedisTemplate.opsForValue().get(prefix+":"+key);
 }
+
+    public <T>T get(String prefix, String key, Class<T> Class) {
+    T obj=(T)redisTemplate.opsForValue().get(prefix+":"+key);
+    return obj;
+    }
 }

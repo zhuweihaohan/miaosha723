@@ -2,6 +2,8 @@ package com.lhd.miaosha.service;
 
 import com.lhd.miaosha.mapper.MiaoshaGoodsMapper;
 import com.lhd.vo.MiaoshaGoods;
+import com.lhd.vo.RedisKey;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,7 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class MiaoshaGoodsService {
+public class MiaoshaGoodsService implements InitializingBean {
+    @Autowired
+    RedisService redisService;
     @Autowired
    MiaoshaGoodsMapper miaoshaGoodsMapper;
     public List<MiaoshaGoods> getAll(){
@@ -29,4 +33,13 @@ public class MiaoshaGoodsService {
 
         return (miaoshaGoodsMapper.updateGoodsCount(miaoshaGoodsId)>0);
 }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        System.out.println("秒杀商品库存数量初始化");
+        List<MiaoshaGoods> list=miaoshaGoodsMapper.getAll();
+        for(MiaoshaGoods goods:list){
+            redisService.set(RedisKey.MIAOSHA_GOODS_STOCK,String.valueOf(goods.getMiaoshaGoodsId()),goods.getStockCount());
+        }
+    }
 }
