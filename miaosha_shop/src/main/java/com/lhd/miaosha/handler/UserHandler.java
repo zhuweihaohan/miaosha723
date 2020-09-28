@@ -32,14 +32,14 @@ public String to_login(){
 return "login";
     }
     @RequestMapping("/login")
-    @ResponseBody
-    public  Result<User> login(User user, HttpServletResponse response) {
+    //@ResponseBody
+    public  String login(User user, HttpServletResponse response) {
 
         Result<User> result = userService.login(user.getTel(), user.getPassword());
         if (result.isSuccessful()) {
             //生成一个唯一的sessionId
             String sessionId = Tools.uuid();
-
+            System.out.println("sessionId:"+sessionId);
             //将用户写到redis中
             redisService.set(RedisKey.USER_LOGIN, sessionId, result.getData(), 1800);
 
@@ -50,7 +50,7 @@ return "login";
             response.addCookie(cookie);
         }
 
-return result;
+        return "redirect:/list";
     }
    /* @ResponseBody
     @RequestMapping("/list")

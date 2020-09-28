@@ -36,7 +36,7 @@ public class MiaoshaGoodsService implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        System.out.println("秒杀商品库存数量初始化");
+//        System.out.println("秒杀商品库存数量初始化");
         List<MiaoshaGoods> list=miaoshaGoodsMapper.getAll();
         for(MiaoshaGoods goods:list){
             redisService.set(RedisKey.MIAOSHA_GOODS_STOCK,String.valueOf(goods.getMiaoshaGoodsId()),goods.getStockCount());

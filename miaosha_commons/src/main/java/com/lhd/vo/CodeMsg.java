@@ -12,6 +12,7 @@ public class CodeMsg {
     public static CodeMsg USER_PASSWORD_ERROR = new CodeMsg(500503, "用户密码错误");
    public  static CodeMsg MIAOSHA_STOCK_ZERO=new CodeMsg(500504,"库存不足，秒杀失败");
     public  static CodeMsg MIAOSHA_MANY_TIMES=new CodeMsg(500505,"已经秒杀过");
+    public  static CodeMsg ACCESS_TOO_MANY=new CodeMsg(500506,"访问太频繁，休息一会吧");
     public CodeMsg() {
 
     }

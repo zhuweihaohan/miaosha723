@@ -2,6 +2,7 @@ package com.lhd.miaosha.service;
 
 import com.lhd.miaosha.mapper.MiaoshaOrderMapper;
 import com.lhd.miaosha.mapper.OrderInfoMapper;
+import com.lhd.miaosha.rabbitmq.MQSender;
 import com.lhd.vo.CodeMsg;
 import com.lhd.vo.MiaoshaOrder;
 import com.lhd.vo.Result;
@@ -17,6 +18,8 @@ public class MiaoshaOrderService {
     MiaoshaGoodsService miaoshaGoodsService;
     @Autowired
     OrderInfoMapper orderInfoMapper;
+    @Autowired
+    MQSender mqSender;
    @Transactional
     public Result<MiaoshaOrder> miaosha(MiaoshaOrder order){
        //1.减库存
@@ -31,6 +34,7 @@ public class MiaoshaOrderService {
 //return Result.error(CodeMsg.MIAOSHA_MANY_TIMES);
 
        //}
+       //mqSender.sendMessage(order);
        //4.秒杀成功；
        return Result.success(order);
    }

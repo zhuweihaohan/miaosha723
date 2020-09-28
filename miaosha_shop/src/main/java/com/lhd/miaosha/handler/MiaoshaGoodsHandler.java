@@ -2,6 +2,8 @@ package com.lhd.miaosha.handler;
 
 import com.lhd.miaosha.service.MiaoshaGoodsService;
 import com.lhd.miaosha.service.RedisService;
+import com.lhd.util.AccessLimit;
+import com.lhd.vo.CodeMsg;
 import com.lhd.vo.MiaoshaGoods;
 import com.lhd.vo.RedisKey;
 import com.lhd.vo.User;
@@ -21,6 +23,7 @@ import java.util.Map;
 
 @Controller
 public class MiaoshaGoodsHandler {
+
     @Autowired
     MiaoshaGoodsService miaoshaGoodsService;
     @Autowired
@@ -29,6 +32,7 @@ public class MiaoshaGoodsHandler {
     ThymeleafViewResolver thymeleafViewResolver;
     @RequestMapping(value="/list",produces = "text/html;charset=UTF-8")
     @ResponseBody
+    @AccessLimit(seconds = 20,maxCount = 10,needLogin = false)
     public String shopList( Map<String,Object> map, HttpServletRequest request, HttpServletResponse response){
        // System.out.println("token:"+token);
         // 从redis中查询数据
@@ -58,6 +62,7 @@ if(html!=null){
 
     @RequestMapping(value = "/miaoshaGoodsDetail/{miaoshaGoodsId}",produces ="text/html;charset=UTF-8")
     @ResponseBody
+    @AccessLimit(seconds = 20,maxCount = 10)
     public String goodsDetals(Map<String,Object> map, @PathVariable("miaoshaGoodsId") Integer miaoshaGoodsId,HttpServletResponse response,HttpServletRequest request){
         //User user=getUserForToken(token);
         //1.从缓存中获取数据；

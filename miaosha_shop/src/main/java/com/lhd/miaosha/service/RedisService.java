@@ -65,4 +65,24 @@ public String getString(String prefix,String key){
     T obj=(T)redisTemplate.opsForValue().get(prefix+":"+key);
     return obj;
     }
+
+    /**
+     * 判断是否存在某个key
+     * @param prefix
+     * @param key
+     * @return
+     */
+    public boolean hasKey(String prefix,String key){
+        return redisTemplate.hasKey(prefix+":"+key);
+    }
+    /**
+     * 对某个key的值做加1操作
+     * @param prefix
+     * @param key
+     * @return
+     */
+    public long increment(String prefix,String key){
+        return redisTemplate.opsForValue().increment(prefix+":"+key);
+    }
+
 }

@@ -3,16 +3,16 @@ package com.lhd.miaosha.handler;
 import com.lhd.miaosha.service.MiaoshaGoodsService;
 import com.lhd.miaosha.service.MiaoshaOrderService;
 import com.lhd.miaosha.service.RedisService;
+import com.lhd.util.Md5Util;
+import com.lhd.util.Tools;
 import com.lhd.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Controller
 public class MiaoshaOrderHandler {
@@ -36,7 +36,7 @@ public class MiaoshaOrderHandler {
         //2.判断是否秒杀结束
 else{
             // int count=miaoshaGoodsService.getGoodsStockCount(order.getMiaoshaGoodsId());
-            long count= (long) redisService.get(RedisKey.MIAOSHA_GOODS_STOCK,String.valueOf(order.getMiaoshaGoodsId()),Long.class);
+            int count= (int) redisService.get(RedisKey.MIAOSHA_GOODS_STOCK,String.valueOf(order.getMiaoshaGoodsId()),Integer.class);
             if(count<1){ map.put("result", Result.error(CodeMsg.MIAOSHA_STOCK_ZERO));
                 miaoshaStock.add(order.getMiaoshaGoodsId());
                 return "miaoshaError"; }
@@ -56,8 +56,10 @@ else{
                 map.put("goods",miaoshaGoodsService.getGoodsById(order.getMiaoshaGoodsId()) );
                 return "miaoshaOrder"; } }
         catch(Exception e){
+            System.out.println("--------------------我抛出异常了:"+e.toString());
             map.put("result",Result.error(CodeMsg.MIAOSHA_MANY_TIMES)); }
         return "miaoshaError"; }
+
     /*** 根据token来获得用户信息； * @param token * @return */
     private User getUserForToken(String token){
         User user=redisService.get(RedisKey.USER_LOGIN +":"+token,User.class);
